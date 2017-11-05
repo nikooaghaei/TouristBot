@@ -12,3 +12,17 @@ E:\DB\TouristBot\TouristBot\obj\Debug\TouristBot.csprojResolveAssemblyReference.
 E:\DB\TouristBot\TouristBot\obj\Debug\TouristBot.csproj.CoreCompileInputs.cache
 E:\DB\TouristBot\TouristBot\obj\Debug\TouristBot.exe
 E:\DB\TouristBot\TouristBot\obj\Debug\TouristBot.pdb
+E:\TouristBot\TouristBot\bin\Debug\TouristBot.exe.config
+E:\TouristBot\TouristBot\bin\Debug\TouristBot.exe
+E:\TouristBot\TouristBot\bin\Debug\TouristBot.pdb
+E:\TouristBot\TouristBot\bin\Debug\EntityFramework.dll
+E:\TouristBot\TouristBot\bin\Debug\EntityFramework.SqlServer.dll
+E:\TouristBot\TouristBot\bin\Debug\NetTelegramBotApi.dll
+E:\TouristBot\TouristBot\bin\Debug\Newtonsoft.Json.dll
+E:\TouristBot\TouristBot\bin\Debug\EntityFramework.xml
+E:\TouristBot\TouristBot\bin\Debug\EntityFramework.SqlServer.xml
+E:\TouristBot\TouristBot\bin\Debug\Newtonsoft.Json.xml
+E:\TouristBot\TouristBot\obj\Debug\TouristBot.csprojResolveAssemblyReference.cache
+E:\TouristBot\TouristBot\obj\Debug\TouristBot.csproj.CoreCompileInputs.cache
+E:\TouristBot\TouristBot\obj\Debug\TouristBot.exe
+E:\TouristBot\TouristBot\obj\Debug\TouristBot.pdb
