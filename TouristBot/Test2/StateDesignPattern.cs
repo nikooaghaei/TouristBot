@@ -1,5 +1,4 @@
 ﻿using System;
-
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,84 +32,54 @@ namespace TouristBot.Test2
             //    }
             //    catch (Exception e) { Console.WriteLine(e.Message); }
             //}
-            if (person.State == "start")
+            if (person.State == "Start")    ////////////inke dar state e city bkhahad ostan ra avaz knad dar enteha ezafe shavad.
             {
                 string message = "به راهنمای ایران گردی خوش آمدید :)";
-                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.GetOptions() };
-                
+                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.StartState() };
+
                 bot.MakeRequestAsync(reg);
                 Console.WriteLine("avali");
-                person.State = "options";
-                
+                person.State = "Province";
+
             }
-            else if (person.State == "options" && person.Text == "مشاهده موارد")
+            else if (person.State == "Province" && person.Text == "انتخاب استان")
             {
-                string message = "هریک از موارد زیر را می توانید انتخاب کنید:";
-                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.GetOptions() };
+                string message = "استان مورد نظر خود را انتخاب کنید:";
+                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.ProvinceState() };
 
                 bot.MakeRequestAsync(reg);
-                person.State = "options";/////unnecessary
+                person.State = "City";
                 Console.WriteLine("dovomi");
             }
-            else if (person.State == "options" && person.Text == "اضافه کردن مکان جدید")
+            else if (person.State == "City" && (person.Text == "تهران" || person.Text == "فارس"))// agar yek ostane alaki type shavad, nabaid peiqame entekhabe shahr namayesh dade shavad , ama in baiad dynamic shavad
             {
-                string message = "نام استان را وارد کنید";
-                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.GetPlaces() };
+                string message = "شهر مورد نظر خود را انتخاب کنید:";
+                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.CityState(person.Text) };
 
                 bot.MakeRequestAsync(reg);
-                person.State = "addPlace1";
+                person.State = "Options";
+                Console.WriteLine("dovomi");
             }
-            else if (person.State == "addPlace1" && person.Text != "انصراف")
+            else if (person.State == "Options" && person.Text == "")//////////chetori hame shahraye hame ostanaro check knm?? age ye halate koliam baram baz moshkele chert type kardan hast
             {
-                string message = "نام شهر را وارد کنید";
-                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.GetPlaces() };
+                string message = "استان مورد نظر خود را انتخاب کنید:";
+                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.ProvinceState() };
 
                 bot.MakeRequestAsync(reg);
-                person.State = "addPlace2";
+                person.State = "";
+                Console.WriteLine("");
             }
-            else if (person.State == "addPlace2" && person.Text != "انصراف")
-            {
-                string message = "توضیحاتی در مورد این مکان وارد کنید";
-                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.GetPlaces() };
 
-                bot.MakeRequestAsync(reg);
-                person.State = "addPlace3";
-            }
-            else if (person.State == "addPlace3" && person.Text != "انصراف")
-            {
-                string message = "توضیحاتی در مورد این مکان وارد کنید";
-                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.GetPlaces() };
-
-                bot.MakeRequestAsync(reg);
-                person.State = "addPlace4";
-            }
-            else if (person.State == "addPlace4" && person.Text != "انصراف")
-            {
-                //if ok
-                string message = "با تشکر از شما مکان جدید ثبت شد";
-                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.GetOptions() };
-
-                bot.MakeRequestAsync(reg);
-                person.State = "options";
-            }
-            else if (person.Text == "انصراف")
-            {
-                string message = "اضافه کردن مکان جدید لغو شد";
-                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.GetOptions() };
-
-                bot.MakeRequestAsync(reg);
-                person.State = "options";
-            }
-            else if (person.State == "options" && person.Text == "خروج")
+            else if (person.State == "Options" && person.Text == "خروج")////////////in halat baarye tamame state ha baiad gozashte shavad
             {
                 string message = "خدانگهدار. می توانید مجدد آغاز کنید :)";
                 var reg = new SendMessage(person.ChatID, message);
                 bot.MakeRequestAsync(reg);
-                person.State = "start";
+                person.State = "Start";
                 Console.WriteLine("sevomi");
             }
 
-           // user.State = person.State;          /////comment**
+            // user.State = person.State;          /////comment**
             //_context.SaveChanges();
         }
     }
