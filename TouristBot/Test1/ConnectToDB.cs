@@ -101,7 +101,7 @@ namespace TouristBot.Test1
                             userId.Add(chatId, cnt);
                             Person p = new Person();
                             p.ChatID = chatId;
-                            p.State = "start";
+                            p.State = "Start";
                             persons.Add(p);
                             cnt++;
                         }

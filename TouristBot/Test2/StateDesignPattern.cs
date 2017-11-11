@@ -32,35 +32,54 @@ namespace TouristBot.Test2
             //    }
             //    catch (Exception e) { Console.WriteLine(e.Message); }
             //}
-            if (person.State == "start")
+            if (person.State == "Start")    ////////////inke dar state e city bkhahad ostan ra avaz knad dar enteha ezafe shavad.
             {
                 string message = "به راهنمای ایران گردی خوش آمدید :)";
-                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.GetOptions() };
-                
-                bot.MakeRequestAsync(reg);
-                Console.WriteLine("avali");
-                person.State = "options";
-                
-            }
-            else if (person.State == "options" && person.Text == "مشاهده موارد")
-            {
-                string message = "هریک از موارد زیر را می توانید انتخاب کنید:";
-                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.GetOptions() };
+                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.StartState() };
 
                 bot.MakeRequestAsync(reg);
-                person.State = "options";/////unnecessary
+                Console.WriteLine("avali");
+                person.State = "Province";
+
+            }
+            else if (person.State == "Province" && person.Text == "انتخاب استان")
+            {
+                string message = "استان مورد نظر خود را انتخاب کنید:";
+                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.ProvinceState() };
+
+                bot.MakeRequestAsync(reg);
+                person.State = "City";
                 Console.WriteLine("dovomi");
             }
-            else if (person.State == "options" && person.Text == "خروج")
+            else if (person.State == "City" && (person.Text == "تهران" || person.Text == "فارس"))// agar yek ostane alaki type shavad, nabaid peiqame entekhabe shahr namayesh dade shavad , ama in baiad dynamic shavad
+            {
+                string message = "شهر مورد نظر خود را انتخاب کنید:";
+                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.CityState(person.Text) };
+
+                bot.MakeRequestAsync(reg);
+                person.State = "Options";
+                Console.WriteLine("dovomi");
+            }
+            else if (person.State == "Options" && person.Text == "")//////////chetori hame shahraye hame ostanaro check knm?? age ye halate koliam baram baz moshkele chert type kardan hast
+            {
+                string message = "استان مورد نظر خود را انتخاب کنید:";
+                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.ProvinceState() };
+
+                bot.MakeRequestAsync(reg);
+                person.State = "";
+                Console.WriteLine("");
+            }
+
+            else if (person.State == "Options" && person.Text == "خروج")////////////in halat baarye tamame state ha baiad gozashte shavad
             {
                 string message = "خدانگهدار. می توانید مجدد آغاز کنید :)";
                 var reg = new SendMessage(person.ChatID, message);
                 bot.MakeRequestAsync(reg);
-                person.State = "start";
+                person.State = "Start";
                 Console.WriteLine("sevomi");
             }
 
-           // user.State = person.State;          /////comment**
+            // user.State = person.State;          /////comment**
             //_context.SaveChanges();
         }
     }
