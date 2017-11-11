@@ -17,7 +17,21 @@ namespace TouristBot.Keyboard
                 new KeyboardButton[]
                 {
                     new KeyboardButton("مشاهده موارد"),
-                    new KeyboardButton("خروج")
+                    new KeyboardButton("خروج"),
+                    new KeyboardButton("اضافه کردن مکان جدید")
+                }
+            };
+            key.ResizeKeyboard = true;
+            return key;
+        }
+        public ReplyKeyboardMarkup GetPlaces()
+        {
+            ReplyKeyboardMarkup key = new ReplyKeyboardMarkup();
+            key.Keyboard = new KeyboardButton[][]
+            {
+                new KeyboardButton[]
+                {
+                    new KeyboardButton("انصراف"),
                 }
             };
             key.ResizeKeyboard = true;

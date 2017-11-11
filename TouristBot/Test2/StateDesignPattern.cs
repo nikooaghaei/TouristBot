@@ -1,4 +1,5 @@
 ﻿using System;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -50,6 +51,55 @@ namespace TouristBot.Test2
                 bot.MakeRequestAsync(reg);
                 person.State = "options";/////unnecessary
                 Console.WriteLine("dovomi");
+            }
+            else if (person.State == "options" && person.Text == "اضافه کردن مکان جدید")
+            {
+                string message = "نام استان را وارد کنید";
+                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.GetPlaces() };
+
+                bot.MakeRequestAsync(reg);
+                person.State = "addPlace1";
+            }
+            else if (person.State == "addPlace1" && person.Text != "انصراف")
+            {
+                string message = "نام شهر را وارد کنید";
+                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.GetPlaces() };
+
+                bot.MakeRequestAsync(reg);
+                person.State = "addPlace2";
+            }
+            else if (person.State == "addPlace2" && person.Text != "انصراف")
+            {
+                string message = "توضیحاتی در مورد این مکان وارد کنید";
+                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.GetPlaces() };
+
+                bot.MakeRequestAsync(reg);
+                person.State = "addPlace3";
+            }
+            else if (person.State == "addPlace3" && person.Text != "انصراف")
+            {
+                string message = "توضیحاتی در مورد این مکان وارد کنید";
+                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.GetPlaces() };
+
+                bot.MakeRequestAsync(reg);
+                person.State = "addPlace4";
+            }
+            else if (person.State == "addPlace4" && person.Text != "انصراف")
+            {
+                //if ok
+                string message = "با تشکر از شما مکان جدید ثبت شد";
+                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.GetOptions() };
+
+                bot.MakeRequestAsync(reg);
+                person.State = "options";
+            }
+            else if (person.Text == "انصراف")
+            {
+                string message = "اضافه کردن مکان جدید لغو شد";
+                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.GetOptions() };
+
+                bot.MakeRequestAsync(reg);
+                person.State = "options";
             }
             else if (person.State == "options" && person.Text == "خروج")
             {
