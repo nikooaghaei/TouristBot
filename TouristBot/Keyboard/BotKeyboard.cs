@@ -10,6 +10,7 @@ namespace TouristBot.Keyboard
 {
     public class BotKeyboard
     {
+
         public ReplyKeyboardMarkup StartState()
         {
             ReplyKeyboardMarkup key = new ReplyKeyboardMarkup();
@@ -18,7 +19,8 @@ namespace TouristBot.Keyboard
                 new KeyboardButton[]
                 {
                     new KeyboardButton("انتخاب استان"),
-                    new KeyboardButton("خروج")
+                    new KeyboardButton("خروج"),
+                    new KeyboardButton("اضافه کردن مکان جدید")
                 }
             };
             key.ResizeKeyboard = true;
@@ -67,6 +69,19 @@ namespace TouristBot.Keyboard
                     }
                  };
             }
+            key.ResizeKeyboard = true;
+            return key;
+        }
+        public ReplyKeyboardMarkup AddPlace()
+        {
+            ReplyKeyboardMarkup key = new ReplyKeyboardMarkup();
+            key.Keyboard = new KeyboardButton[][]
+            {
+                new KeyboardButton[]
+                {
+                    new KeyboardButton("انصراف")
+                }
+            };
             key.ResizeKeyboard = true;
             return key;
         }

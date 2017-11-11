@@ -18,5 +18,16 @@
   <EntityContainer Name="Tourist_BotEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Cities" EntityType="Self.City" />
     <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="Places" EntityType="Tourist_BotModel.Place" />
   </EntityContainer>
+  <EntityType Name="Place">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="state" Type="String" Nullable="false" />
+    <Property Name="city" Type="String" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" />
+    <Property Name="desc" Type="String" Nullable="false" />
+  </EntityType>
 </Schema>

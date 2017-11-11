@@ -109,7 +109,7 @@ namespace TouristBot.Test1
                         Console.WriteLine(persons[userId[chatId]].State);
                         StateDesignPattern userState = new StateDesignPattern();
                         Console.WriteLine("mire");
-                        userState.CheckState(persons[userId[chatId]], bot, _context);
+                        userState.CheckState(persons[userId[chatId]], bot,  _context );
                         offset = update.UpdateId + 1;
                         Console.WriteLine("mire2");
                         iid++;
