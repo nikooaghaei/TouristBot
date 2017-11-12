@@ -120,6 +120,17 @@ namespace TouristBot.Test2
                 //if ok
                 NewPlace.np_desc = person.Text;
                 Console.WriteLine(NewPlace.np_state + NewPlace.np_city+ NewPlace.np_name+ NewPlace.np_desc);
+
+                Place p = new Place();
+                p.City = NewPlace.np_city;
+                p.Description = NewPlace.np_desc;
+                p.Name = NewPlace.np_name;
+                p.Province = NewPlace.np_state;
+                _context.Places.Add(p);
+                try { _context.SaveChanges(); }
+                catch (Exception e) { Console.WriteLine(e.Message); }
+
+
                 string message = "با تشکر از شما مکان جدید ثبت شد";
                 var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.StartState() };
                 
