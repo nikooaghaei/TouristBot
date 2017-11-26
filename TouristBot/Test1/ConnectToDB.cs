@@ -106,12 +106,12 @@ namespace TouristBot.Test1
                             cnt++;
                         }
                         persons[userId[chatId]].Text = update.Message.Text;
-                        Console.WriteLine(persons[userId[chatId]].State);
+                       // Console.WriteLine(persons[userId[chatId]].State);
                         StateDesignPattern userState = new StateDesignPattern();
-                        Console.WriteLine("mire");
+                     //   Console.WriteLine("mire");
                         userState.CheckState(persons[userId[chatId]], bot,  _context );
                         offset = update.UpdateId + 1;
-                        Console.WriteLine("mire2");
+                      //  Console.WriteLine("mire2");
                         iid++;
                     }
                 }
