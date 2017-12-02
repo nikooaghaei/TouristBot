@@ -15,6 +15,7 @@ namespace TouristBot.Linq
     public partial class City
     {
         public long Id { get; set; }
-        public string Message { get; set; }
+        public string Name { get; set; }
+        public long Province_Id { get; set; }
     }
 }

@@ -26,7 +26,8 @@ namespace TouristBot.Linq
         }
     
         public virtual DbSet<City> Cities { get; set; }
-        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Place> Places { get; set; }
+        public virtual DbSet<Province> Provinces { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

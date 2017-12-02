@@ -57,32 +57,52 @@ namespace TouristBot.Test2
             else if (person.State == "City")
             {
                 string message = "شهر مورد نظر خود را انتخاب کنید:";
-                var reg = new SendMessage(person.ChatID, message) {ReplyMarkup = keyboard.CityState(person.Text)};
+                long proID = _context.Provinces.Where(x => x.Name == person.Text).ToList()[0].Id;
+                var reg = new SendMessage(person.ChatID, message) {ReplyMarkup = keyboard.CityState(proID)};
 
                 bot.MakeRequestAsync(reg);
                 person.State = "Places";
               //  Console.WriteLine("dovomi");
             }
-            else if (person.State == "Places" && person.Text == "")
-                //////////chetori hame shahraye hame ostanaro check knm?? age ye halate koliam baram baz moshkele chert type kardan hast
+            /* else if (person.State == "Places" && person.Text == "")
+                 //////////chetori hame shahraye hame ostanaro check knm?? age ye halate koliam baram baz moshkele chert type kardan hast
+             {
+                 try
+                 {
+                     string message = "استان مورد نظر خود را انتخاب کنید:";
+                     var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.ProvinceState() };
+
+                     bot.MakeRequestAsync(reg);
+                     person.State = "";
+                     Console.WriteLine("");
+                 }
+                 catch (Exception e)
+                 {
+
+                     Console.WriteLine(e.Message);
+                 }
+
+             }*/   //hich idei nadaram ina chian ... comment mikonam ziresh ok mikonam
+
+            else if (person.State == "Places")
             {
-                try
-                {
-                    string message = "استان مورد نظر خود را انتخاب کنید:";
-                    var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.ProvinceState() };
 
-                    bot.MakeRequestAsync(reg);
-                    person.State = "";
-                    Console.WriteLine("");
-                }
-                catch (Exception e)
-                {
-                    
-                    Console.WriteLine(e.Message);
-                }
+                string message = "مکان های دیدنی به شرح زیر است. برای اطلاعات بیشتر مکان مورد نظر را انتخاب کنید";
+                long CitID = _context.Cities.Where(x => x.Name == person.Text).ToList()[0].Id;
+                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.PlaceState(CitID) };
 
+                bot.MakeRequestAsync(reg);
+                person.State = "Desc";
             }
+            else if (person.State == "Desc")
+            {
 
+                string message = _context.Places.Where(x => x.Name == person.Text).ToList()[0].Description; 
+                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.StartState() };
+
+                bot.MakeRequestAsync(reg);
+                person.State = "Options";
+            }
             //else if (person.State == "Places" && person.Text == "خروج")////////////in halat baarye tamame state ha baiad gozashte shavad
             else if (person.Text == "خروج")
             {
@@ -103,7 +123,7 @@ namespace TouristBot.Test2
             else if (person.State == "addPlace1" && person.Text != "انصراف")
                 
             {
-                NewPlace.np_state = person.Text;
+                NewPlace.np_pro = person.Text;
                 string message = "نام شهر را وارد کنید";
                 var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.AddPlace() };
 
@@ -133,14 +153,28 @@ namespace TouristBot.Test2
             {
                 //if ok
                 NewPlace.np_desc = person.Text;
-                Console.WriteLine(NewPlace.np_state + NewPlace.np_city+ NewPlace.np_name+ NewPlace.np_desc);
+                Console.WriteLine(NewPlace.np_pro + NewPlace.np_city+ NewPlace.np_name+ NewPlace.np_desc);
 
-                Place p = new Place();
-                p.City = NewPlace.np_city;
-                p.Description = NewPlace.np_desc;
-                p.Name = NewPlace.np_name;
-                p.Province = NewPlace.np_state;
-                _context.Places.Add(p);
+                Place pl = new Place();
+                City c = new City();
+                Province pr = new Province();
+                pr.Name = NewPlace.np_pro;
+                c.Name = NewPlace.np_city;
+                pl.Description = NewPlace.np_desc;
+                pl.Name = NewPlace.np_name;
+                _context.Provinces.Add(pr);
+                try { _context.SaveChanges(); }
+                catch (Exception e) { Console.WriteLine(e.Message); }
+                //while(_context.Provinces.Where(x => x.Name == NewPlace.np_pro).ToList()[0].Id == 0) { }
+                c.Province_Id = _context.Provinces.Where(x => x.Name == NewPlace.np_pro ).ToList()[0].Id;
+                _context.Cities.Add(c);
+                try { _context.SaveChanges(); }
+                catch (Exception e) { Console.WriteLine(e.Message); }
+                //while (_context.Cities.Where(x => x.Name == NewPlace.np_city).ToList()[0].Id == 0) { }
+                pl.City_Id = _context.Cities.Where(x => x.Name == NewPlace.np_city).ToList()[0].Id;
+                _context.Places.Add(pl);
+                
+                
                 try { _context.SaveChanges(); }
                 catch (Exception e) { Console.WriteLine(e.Message); }
 

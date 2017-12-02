@@ -12,11 +12,9 @@ namespace TouristBot.Linq
     using System;
     using System.Collections.Generic;
     
-    public partial class Place
+    public partial class Province
     {
         public long Id { get; set; }
-        public long City_Id { get; set; }
-        public string Description { get; set; }
         public string Name { get; set; }
     }
 }

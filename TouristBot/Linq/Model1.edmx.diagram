@@ -4,10 +4,11 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3f7746997f4b4176a1774a2a6515bdc6" Name="Diagram1">
+      <Diagram DiagramId="708fb25f00de49fa90f1d88a9ab086f8" Name="Diagram1">
         <EntityTypeShape EntityType="Tourist_BotModel.City" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Tourist_BotModel.User" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Tourist_BotModel.Place" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Tourist_BotModel.Place" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tourist_BotModel.Province" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tourist_BotModel.User" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -31,13 +31,13 @@ namespace TouristBot.Keyboard
         public ReplyKeyboardMarkup ProvinceState()
         {
             ReplyKeyboardMarkup key = new ReplyKeyboardMarkup();
-            var places = _context.Places.ToList();  ////har ostan chanbar chap mishavad-be tedade shahrhayash ke be aan tedad dar jadvale places amade. ba eslah jadval ha eslah shaavd.
+            var places = _context.Provinces.ToList();  ////har ostan chanbar chap mishavad-be tedade shahrhayash ke be aan tedad dar jadvale places amade. ba eslah jadval ha eslah shaavd.
             //Console.WriteLine(places.Count);
             key.Keyboard = new KeyboardButton[places.Count()][];
             for (int j = 0; j < places.Count(); j++)
             {
                 key.Keyboard[j] = new KeyboardButton[1];
-                key.Keyboard[j][0] = new KeyboardButton(places[j].Province);
+                key.Keyboard[j][0] = new KeyboardButton(places[j].Name);
             }
             //for (int i = 0; i < temp.Count; i++)
                 //{
@@ -55,16 +55,16 @@ namespace TouristBot.Keyboard
                 key.ResizeKeyboard = true;
             return key;
         }
-        public ReplyKeyboardMarkup CityState(string province)
+        public ReplyKeyboardMarkup CityState(long province)
         {
             ReplyKeyboardMarkup key = new ReplyKeyboardMarkup();
 
-            var places = _context.Places.Where(x => x.Province == province).ToList();
+            var places = _context.Cities.Where(x => x.Province_Id == province).ToList();
             key.Keyboard = new KeyboardButton[places.Count()][];
             for (int j = 0; j < places.Count(); j++)
             {
                 key.Keyboard[j] = new KeyboardButton[1];
-                key.Keyboard[j][0] = new KeyboardButton(places[j].City);
+                key.Keyboard[j][0] = new KeyboardButton(places[j].Name);
             }
            
             //if (province == "تهران")
@@ -96,6 +96,22 @@ namespace TouristBot.Keyboard
             key.ResizeKeyboard = true;
             return key;
         }
+        public ReplyKeyboardMarkup PlaceState(long cit)
+        {
+            ReplyKeyboardMarkup key = new ReplyKeyboardMarkup();
+
+            var places = _context.Places.Where(x => x.City_Id == cit).ToList();
+            Console.WriteLine(cit);
+            key.Keyboard = new KeyboardButton[places.Count()][];
+            for (int j = 0; j < places.Count(); j++)
+            {
+                key.Keyboard[j] = new KeyboardButton[1];
+                key.Keyboard[j][0] = new KeyboardButton(places[j].Name);
+            }
+            key.ResizeKeyboard = true;
+            return key;
+        }
+
         public ReplyKeyboardMarkup AddPlace()
         {
             ReplyKeyboardMarkup key = new ReplyKeyboardMarkup();

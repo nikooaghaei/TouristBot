@@ -39,4 +39,3 @@ C:\TouristBot\TouristBot\bin\Debug\Newtonsoft.Json.dll
 C:\TouristBot\TouristBot\bin\Debug\EntityFramework.xml
 C:\TouristBot\TouristBot\bin\Debug\EntityFramework.SqlServer.xml
 C:\TouristBot\TouristBot\bin\Debug\Newtonsoft.Json.xml
-C:\TouristBot\TouristBot\obj\Debug\TouristBot.csproj.CoreCompileInputs.cache
