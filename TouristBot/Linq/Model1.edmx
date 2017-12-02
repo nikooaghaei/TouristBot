@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Tourist_BotModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Tourist_BotModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="City">
           <Key>
             <PropertyRef Name="Id" />
@@ -33,9 +33,12 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="bigint" Nullable="false" />
           <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
           <Property Name="State" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Username" Type="nvarchar(max)" />
+          <Property Name="Firstname" Type="nvarchar(max)" />
+          <Property Name="Lastname" Type="nvarchar(max)" />
         </EntityType>
         <EntityContainer Name="Tourist_BotModelStoreContainer">
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
@@ -43,7 +46,8 @@
           <EntitySet Name="Province" EntityType="Self.Province" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Tourist_BotModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -75,9 +79,12 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int64" Nullable="false" />
           <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="State" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Firstname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Lastname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityContainer Name="Tourist_BotEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Cities" EntityType="Self.City" />
@@ -124,6 +131,9 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Message" ColumnName="Message" />
                 <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

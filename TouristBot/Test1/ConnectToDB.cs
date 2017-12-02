@@ -102,9 +102,47 @@ namespace TouristBot.Test1
                             Person p = new Person();
                             p.ChatID = chatId;
                             p.State = "Start";
+
                             persons.Add(p);
                             cnt++;
+
+
                         }
+                        var check = _context.Users.Where(x => x.Id == chatId);
+                        //Console.WriteLine(check.ToList()[0].Id);
+                        if (check.Count() != 0)
+                        {
+                            var temp = _context.Users.FirstOrDefault(x => x.Id == chatId);
+                            _context.Users.Remove(temp);
+                        }
+                            // _context.Users.SqlQuery("DELETE FROM[Tourist_Bot].[dbo].[User] WHERE[Tourist_Bot].[dbo].[User].Id = " + chatId);
+
+                            User u = new User();
+
+                            u.Id = chatId;
+                            u.Message = update.Message.Text;
+                            u.State = persons.Where(x => x.ChatID == chatId).ToList()[0].State;
+                            u.Username = update.Message.Chat.Username;
+                            u.Firstname = update.Message.Chat.FirstName;
+                            u.Lastname = update.Message.Chat.LastName;
+                            _context.Users.Add(u);
+                            Console.WriteLine("avali");
+                         
+                        //else
+                        
+                          //  Console.Write("DELETE FROM[Tourist_Bot].[dbo].[User] WHERE[Tourist_Bot].[dbo].[User].Id = " + chatId);
+                          //  _context.Users.SqlQuery("DELETE FROM[Tourist_Bot].[dbo].[User] WHERE[Tourist_Bot].[dbo].[User].Id = 60163330");
+                        //_context.Users.S
+
+                        //_context.Users.
+                             
+                            try { _context.SaveChanges(); }
+                        catch (Exception e) { Console.WriteLine(e.Message); }
+
+                       
+
+ 
+
                         persons[userId[chatId]].Text = update.Message.Text;
                        // Console.WriteLine(persons[userId[chatId]].State);
                         StateDesignPattern userState = new StateDesignPattern();

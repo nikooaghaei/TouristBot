@@ -12,5 +12,6 @@ namespace TouristBot.Model
         public long ChatID;
         public string Text;
 
+
     }
 }
