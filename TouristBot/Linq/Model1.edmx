@@ -40,6 +40,12 @@
           <Property Name="Firstname" Type="nvarchar(max)" />
           <Property Name="Lastname" Type="nvarchar(max)" />
         </EntityType>
+        <Function Name="AddPlace" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Pro" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Cit" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Pla" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Des" Type="nvarchar(max)" Mode="In" />
+        </Function>
         <EntityContainer Name="Tourist_BotModelStoreContainer">
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Place" EntityType="Self.Place" Schema="dbo" store:Type="Tables" />
@@ -91,6 +97,12 @@
           <EntitySet Name="Places" EntityType="Self.Place" />
           <EntitySet Name="Provinces" EntityType="Self.Province" />
           <EntitySet Name="Users" EntityType="Self.User" />
+          <FunctionImport Name="AddPlace">
+            <Parameter Name="Pro" Mode="In" Type="String" />
+            <Parameter Name="Cit" Mode="In" Type="String" />
+            <Parameter Name="Pla" Mode="In" Type="String" />
+            <Parameter Name="Des" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -137,6 +149,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AddPlace" FunctionName="Tourist_BotModel.Store.AddPlace" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

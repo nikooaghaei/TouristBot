@@ -155,25 +155,27 @@ namespace TouristBot.Test2
                 NewPlace.np_desc = person.Text;
                 Console.WriteLine(NewPlace.np_pro + NewPlace.np_city+ NewPlace.np_name+ NewPlace.np_desc);
 
-                Place pl = new Place();
-                City c = new City();
-                Province pr = new Province();
-                pr.Name = NewPlace.np_pro;
-                c.Name = NewPlace.np_city;
-                pl.Description = NewPlace.np_desc;
-                pl.Name = NewPlace.np_name;
-                _context.Provinces.Add(pr);
-                try { _context.SaveChanges(); }
-                catch (Exception e) { Console.WriteLine(e.Message); }
-                //while(_context.Provinces.Where(x => x.Name == NewPlace.np_pro).ToList()[0].Id == 0) { }
-                c.Province_Id = _context.Provinces.Where(x => x.Name == NewPlace.np_pro ).ToList()[0].Id;
-                _context.Cities.Add(c);
-                try { _context.SaveChanges(); }
-                catch (Exception e) { Console.WriteLine(e.Message); }
-                //while (_context.Cities.Where(x => x.Name == NewPlace.np_city).ToList()[0].Id == 0) { }
-                pl.City_Id = _context.Cities.Where(x => x.Name == NewPlace.np_city).ToList()[0].Id;
-                _context.Places.Add(pl);
-                
+                /*  Place pl = new Place();
+                  City c = new City();
+                  Province pr = new Province();
+                  pr.Name = NewPlace.np_pro;
+                  c.Name = NewPlace.np_city;
+                  pl.Description = NewPlace.np_desc;
+                  pl.Name = NewPlace.np_name;
+                  _context.Provinces.Add(pr);
+                  try { _context.SaveChanges(); }
+                  catch (Exception e) { Console.WriteLine(e.Message); }
+                  //while(_context.Provinces.Where(x => x.Name == NewPlace.np_pro).ToList()[0].Id == 0) { }
+                  c.Province_Id = _context.Provinces.Where(x => x.Name == NewPlace.np_pro ).ToList()[0].Id;
+                  _context.Cities.Add(c);
+                  try { _context.SaveChanges(); }
+                  catch (Exception e) { Console.WriteLine(e.Message); }
+                  //while (_context.Cities.Where(x => x.Name == NewPlace.np_city).ToList()[0].Id == 0) { }
+                  pl.City_Id = _context.Cities.Where(x => x.Name == NewPlace.np_city).ToList()[0].Id;
+                  _context.Places.Add(pl);
+                  */
+
+                _context.AddPlace(NewPlace.np_pro, NewPlace.np_city, NewPlace.np_name, NewPlace.np_desc);
                 
                 try { _context.SaveChanges(); }
                 catch (Exception e) { Console.WriteLine(e.Message); }
