@@ -32,7 +32,7 @@ namespace TouristBot.Linq
         public virtual DbSet<Province> Provinces { get; set; }
         public virtual DbSet<User> Users { get; set; }
     
-        public virtual int AddPlace(string pro, string cit, string pla, string des)
+        public virtual int AddPlace(string pro, string cit, string pla, string des, string phoID)
         {
             var proParameter = pro != null ?
                 new ObjectParameter("Pro", pro) :
@@ -50,7 +50,36 @@ namespace TouristBot.Linq
                 new ObjectParameter("Des", des) :
                 new ObjectParameter("Des", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddPlace", proParameter, citParameter, plaParameter, desParameter);
+            var phoIDParameter = phoID != null ?
+                new ObjectParameter("PhoID", phoID) :
+                new ObjectParameter("PhoID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddPlace", proParameter, citParameter, plaParameter, desParameter, phoIDParameter);
+        }
+    
+        public virtual int AddPlace_tran(string pro, string cit, string pla, string des, string phoID)
+        {
+            var proParameter = pro != null ?
+                new ObjectParameter("Pro", pro) :
+                new ObjectParameter("Pro", typeof(string));
+    
+            var citParameter = cit != null ?
+                new ObjectParameter("Cit", cit) :
+                new ObjectParameter("Cit", typeof(string));
+    
+            var plaParameter = pla != null ?
+                new ObjectParameter("Pla", pla) :
+                new ObjectParameter("Pla", typeof(string));
+    
+            var desParameter = des != null ?
+                new ObjectParameter("Des", des) :
+                new ObjectParameter("Des", typeof(string));
+    
+            var phoIDParameter = phoID != null ?
+                new ObjectParameter("PhoID", phoID) :
+                new ObjectParameter("PhoID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddPlace_tran", proParameter, citParameter, plaParameter, desParameter, phoIDParameter);
         }
     }
 }

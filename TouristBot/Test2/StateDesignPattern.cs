@@ -8,12 +8,16 @@ using NetTelegramBotApi.Requests;
 using TouristBot.Keyboard;
 using TouristBot.Linq;
 using TouristBot.Model;
+using TouristBot.DBHelper;
 
 namespace TouristBot.Test2
 {
     public class StateDesignPattern
     {
         BotKeyboard keyboard = new BotKeyboard();
+        //DBH DB = new DBH();
+
+       // public DBHelper Db { get => db; set => db = value; }
 
         public void CheckState(Person person, TelegramBot bot, Tourist_BotEntities _context)
         {
@@ -33,36 +37,36 @@ namespace TouristBot.Test2
             //    }
             //    catch (Exception e) { Console.WriteLine(e.Message); }
             //}
-            if (person.State == "Start")
-                ////////////inke dar state e city bkhahad ostan ra avaz knad dar enteha ezafe shavad.
+            if (person.State == "Start" || person.Text=="Start" || person.Text=="start")
+            ////////////inke dar state e city bkhahad ostan ra avaz knad dar enteha ezafe shavad.
             {
                 string message = "به راهنمای ایران گردی خوش آمدید :)";
-                var reg = new SendMessage(person.ChatID, message) {ReplyMarkup = keyboard.StartState()};
+                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.StartState() };
 
                 bot.MakeRequestAsync(reg);
-             //   Console.WriteLine("avali");
+                //   Console.WriteLine("avali");
                 person.State = "Options";//taeen ink mkhahad ostan ezafe knd ya list bebinad
 
             }
             else if (person.State == "Options" && person.Text == "انتخاب استان")
             {
                 string message = "استان مورد نظر خود را انتخاب کنید:";
-                var reg = new SendMessage(person.ChatID, message) {ReplyMarkup = keyboard.ProvinceState()};
+                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.ProvinceState() };
 
                 bot.MakeRequestAsync(reg);
                 person.State = "City";
-            //    Console.WriteLine("dovomi");
+                //    Console.WriteLine("dovomi");
             }
             //else if (person.State == "City" && (person.Text == "تهران" || person.Text == "فارس"))// agar yek ostane alaki type shavad, nabaid peiqame entekhabe shahr namayesh dade shavad , ama in baiad dynamic shavad
-            else if (person.State == "City")
+            else if (person.State == "City" && person.Text != "انصراف")
             {
                 string message = "شهر مورد نظر خود را انتخاب کنید:";
                 long proID = _context.Provinces.Where(x => x.Name == person.Text).ToList()[0].Id;
-                var reg = new SendMessage(person.ChatID, message) {ReplyMarkup = keyboard.CityState(proID)};
+                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.CityState(proID) };
 
                 bot.MakeRequestAsync(reg);
                 person.State = "Places";
-              //  Console.WriteLine("dovomi");
+                //  Console.WriteLine("dovomi");
             }
             /* else if (person.State == "Places" && person.Text == "")
                  //////////chetori hame shahraye hame ostanaro check knm?? age ye halate koliam baram baz moshkele chert type kardan hast
@@ -84,7 +88,7 @@ namespace TouristBot.Test2
 
              }*/   //hich idei nadaram ina chian ... comment mikonam ziresh ok mikonam
 
-            else if (person.State == "Places")
+            else if (person.State == "Places" && person.Text != "انصراف")
             {
 
                 string message = "مکان های دیدنی به شرح زیر است. برای اطلاعات بیشتر مکان مورد نظر را انتخاب کنید";
@@ -94,10 +98,12 @@ namespace TouristBot.Test2
                 bot.MakeRequestAsync(reg);
                 person.State = "Desc";
             }
-            else if (person.State == "Desc")
+            else if (person.State == "Desc" && person.Text != "انصراف")
             {
 
-                string message = _context.Places.Where(x => x.Name == person.Text).ToList()[0].Description; 
+                string message = _context.Places.Where(x => x.Name == person.Text).ToList()[0].Description;
+                FileToSend F = new FileToSend(_context.Places.Where(x => x.Name == person.Text).ToList()[0].Photo);
+                bot.MakeRequestAsync(new SendPhoto(person.ChatID, F));
                 var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.StartState() };
 
                 bot.MakeRequestAsync(reg);
@@ -107,23 +113,24 @@ namespace TouristBot.Test2
             else if (person.Text == "خروج")
             {
                 string message = "خدانگهدار. می توانید مجدد آغاز کنید :)";
-                var reg = new SendMessage(person.ChatID, message);
+                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.OutState() }; 
                 bot.MakeRequestAsync(reg);
-                person.State = "Start";
-              //  Console.WriteLine("sevomi");
+                person.State = "Out";
+                //  Console.WriteLine("sevomi");
             }
             else if (person.State == "Options" && person.Text == "اضافه کردن مکان جدید")
             {
                 string message = "نام استان را وارد کنید";
+              //  string message = person.pic;
                 var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.AddPlace() };
 
                 bot.MakeRequestAsync(reg);
                 person.State = "addPlace1";
             }
             else if (person.State == "addPlace1" && person.Text != "انصراف")
-                
+
             {
-                NewPlace.np_pro = person.Text;
+                person.np_pro = person.Text;
                 string message = "نام شهر را وارد کنید";
                 var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.AddPlace() };
 
@@ -133,7 +140,7 @@ namespace TouristBot.Test2
             else if (person.State == "addPlace2" && person.Text != "انصراف")
 
             {
-                NewPlace.np_city = person.Text;
+                person.np_city = person.Text;
                 string message = "نام مکان را وارد کنید";
                 var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.AddPlace() };
 
@@ -142,7 +149,7 @@ namespace TouristBot.Test2
             }
             else if (person.State == "addPlace3" && person.Text != "انصراف")
             {
-                NewPlace.np_name = person.Text;
+                person.np_name = person.Text;
                 string message = "توضیحاتی در مورد این مکان وارد کنید";
                 var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.AddPlace() };
                 bot.MakeRequestAsync(reg);
@@ -152,8 +159,8 @@ namespace TouristBot.Test2
             else if (person.State == "addPlace4" && person.Text != "انصراف")
             {
                 //if ok
-                NewPlace.np_desc = person.Text;
-                Console.WriteLine(NewPlace.np_pro + NewPlace.np_city+ NewPlace.np_name+ NewPlace.np_desc);
+                person.np_desc = person.Text;
+                Console.WriteLine(person.np_pro + person.np_city + person.np_name + person.np_desc);
 
                 /*  Place pl = new Place();
                   City c = new City();
@@ -175,21 +182,45 @@ namespace TouristBot.Test2
                   _context.Places.Add(pl);
                   */
 
-                _context.AddPlace(NewPlace.np_pro, NewPlace.np_city, NewPlace.np_name, NewPlace.np_desc);
-                
+               
+
                 try { _context.SaveChanges(); }
-                catch (Exception e) { Console.WriteLine(e.Message); }
+                catch (Exception e) { Console.WriteLine(e.Message+"DB error"); }
 
 
-                string message = "با تشکر از شما مکان جدید ثبت شد";
+                string message = "لطفا عکسی از مکان را ارسال کنید";
+                var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.AddPlace() };
+
+                bot.MakeRequestAsync(reg);
+                person.State = "Pic";
+                person.np_IsP = true;
+            }
+            else if (person.State == "Pic")
+            {
+                // NewPlace.np_pic = person.Pic;
+                Console.WriteLine(person.np_pro+ person.np_city+ person.np_name+ person.np_desc+ person.Pic[0].FileId);
+                //  _context.AddPlace("1", "2", "3", "4", "5");
+                DBH.AddPlace(person.np_pro , person.np_city , person.np_name , person.np_desc , person.Pic[0].FileId);
+                string message = "با تشکر از شما مکان جدید ثبط شد";
                 var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.StartState() };
-                
+                // GetChat(person.ChatID).
+
                 bot.MakeRequestAsync(reg);
                 person.State = "Options";
+                person.np_IsP = false;
+
             }
             else if (person.Text == "انصراف")
             {
-                string message = "اضافه کردن مکان جدید لغو شد";
+                string message = "";
+                if (person.State == "addPlace1" || person.State == "addPlace2" || person.State == "addPlace3" || person.State == "addPlace4")
+                {
+                    message = "اضافه کردن مکان جدید لغو شد";
+                }
+                else
+                {
+                    message = "جست و جو مکان لغو شد";
+                }
                 var reg = new SendMessage(person.ChatID, message) { ReplyMarkup = keyboard.StartState() };
 
                 bot.MakeRequestAsync(reg);

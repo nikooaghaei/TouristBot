@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBHelper\DBH.cs" />
     <Compile Include="Keyboard\BotKeyboard.cs" />
     <Compile Include="Linq\City.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -85,7 +86,6 @@
     <Compile Include="Linq\User.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\NewPlace.cs" />
     <Compile Include="Model\Person.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

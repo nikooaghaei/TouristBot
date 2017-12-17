@@ -11,6 +11,12 @@ namespace TouristBot.Model
         public string State;
         public long ChatID;
         public string Text;
+        public NetTelegramBotApi.Types.PhotoSize[] Pic;
+        public string np_pro = "def";
+        public string np_city = "def";
+        public string np_name = "def";
+        public string np_desc = "def";
+        public Boolean np_IsP = false;
 
 
     }

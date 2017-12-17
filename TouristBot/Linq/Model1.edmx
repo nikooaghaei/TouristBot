@@ -21,6 +21,7 @@
           <Property Name="City_Id" Type="bigint" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Photo" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Province">
           <Key>
@@ -45,6 +46,14 @@
           <Parameter Name="Cit" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="Pla" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="Des" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="PhoID" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="AddPlace_tran" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Pro" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Cit" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Pla" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Des" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="PhoID" Type="nvarchar(max)" Mode="In" />
         </Function>
         <EntityContainer Name="Tourist_BotModelStoreContainer">
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
@@ -73,6 +82,7 @@
           <Property Name="City_Id" Type="Int64" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Province">
           <Key>
@@ -102,6 +112,14 @@
             <Parameter Name="Cit" Mode="In" Type="String" />
             <Parameter Name="Pla" Mode="In" Type="String" />
             <Parameter Name="Des" Mode="In" Type="String" />
+            <Parameter Name="PhoID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AddPlace_tran">
+            <Parameter Name="Pro" Mode="In" Type="String" />
+            <Parameter Name="Cit" Mode="In" Type="String" />
+            <Parameter Name="Pla" Mode="In" Type="String" />
+            <Parameter Name="Des" Mode="In" Type="String" />
+            <Parameter Name="PhoID" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
       </Schema>
@@ -126,6 +144,7 @@
                 <ScalarProperty Name="City_Id" ColumnName="City_Id" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -150,6 +169,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="AddPlace" FunctionName="Tourist_BotModel.Store.AddPlace" />
+          <FunctionImportMapping FunctionImportName="AddPlace_tran" FunctionName="Tourist_BotModel.Store.AddPlace_tran" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

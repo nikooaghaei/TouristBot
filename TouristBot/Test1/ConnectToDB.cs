@@ -9,6 +9,7 @@ using NetTelegramBotApi.Requests;
 using TouristBot.Linq;
 using TouristBot.Model;
 using TouristBot.Test2;
+using System.IO;
 
 namespace TouristBot.Test1
 {
@@ -102,7 +103,7 @@ namespace TouristBot.Test1
                             Person p = new Person();
                             p.ChatID = chatId;
                             p.State = "Start";
-
+                            //p.pic = update.Message.Photo.ToString();
                             persons.Add(p);
                             cnt++;
 
@@ -117,17 +118,24 @@ namespace TouristBot.Test1
                         }
                             // _context.Users.SqlQuery("DELETE FROM[Tourist_Bot].[dbo].[User] WHERE[Tourist_Bot].[dbo].[User].Id = " + chatId);
 
-                            User u = new User();
+                        User u = new User();
 
-                            u.Id = chatId;
+                        u.Id = chatId;
+                        if (!persons[userId[chatId]].np_IsP)
                             u.Message = update.Message.Text;
-                            u.State = persons.Where(x => x.ChatID == chatId).ToList()[0].State;
-                            u.Username = update.Message.Chat.Username;
-                            u.Firstname = update.Message.Chat.FirstName;
-                            u.Lastname = update.Message.Chat.LastName;
-                            _context.Users.Add(u);
-                            Console.WriteLine("avali");
-                         
+                        else
+                            u.Message = "IsPhoto";
+                        u.State = persons.Where(x => x.ChatID == chatId).ToList()[0].State;
+                        u.Username = update.Message.Chat.Username;
+                        u.Firstname = update.Message.Chat.FirstName;
+                        u.Lastname = update.Message.Chat.LastName;
+                        _context.Users.Add(u);
+ 
+
+
+                        //    Console.WriteLine("avali");
+                              
+                            
                         //else
                         
                           //  Console.Write("DELETE FROM[Tourist_Bot].[dbo].[User] WHERE[Tourist_Bot].[dbo].[User].Id = " + chatId);
@@ -137,14 +145,24 @@ namespace TouristBot.Test1
                         //_context.Users.
                              
                             try { _context.SaveChanges(); }
-                        catch (Exception e) { Console.WriteLine(e.Message); }
+                        catch (Exception e) { Console.WriteLine(e.Message + "DB in ConnectToDB"); }
 
-                       
 
- 
 
-                        persons[userId[chatId]].Text = update.Message.Text;
-                       // Console.WriteLine(persons[userId[chatId]].State);
+
+                        //MemoryStream ms = new MemoryStream();
+                        if (!persons[userId[chatId]].np_IsP)
+                            persons[userId[chatId]].Text = update.Message.Text;
+                        else
+                        {
+                            persons[userId[chatId]].Pic = update.Message.Photo;
+
+                            //persons[userId[chatId]].Pic.FileId = "fuck";
+                              Console.Write("ax" + persons[userId[chatId]].Pic[0].FileId);
+                            // string FUCKU = persons[userId[chatId]].Pic.FileId;
+
+                        }
+                            // Console.WriteLine(persons[userId[chatId]].State);
                         StateDesignPattern userState = new StateDesignPattern();
                      //   Console.WriteLine("mire");
                         userState.CheckState(persons[userId[chatId]], bot,  _context );
@@ -153,7 +171,7 @@ namespace TouristBot.Test1
                         iid++;
                     }
                 }
-                catch (Exception e) { Console.WriteLine(e.Message); }
+                catch (Exception e) { Console.WriteLine(e.Message+ e.Source + e.GetType() + e.Data +"Base error"); }
             }
         }
     }
