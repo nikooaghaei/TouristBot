@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NetTelegramBotApi.Requests;
 
 namespace TouristBot.Model
 {
@@ -11,7 +12,7 @@ namespace TouristBot.Model
         public string State;
         public long ChatID;
         public string Text;
-        public NetTelegramBotApi.Types.PhotoSize[] Pic;
+        public NetTelegramBotApi.Types.PhotoSize[] Pic = new NetTelegramBotApi.Types.PhotoSize[1];
         public string np_pro = "def";
         public string np_city = "def";
         public string np_name = "def";

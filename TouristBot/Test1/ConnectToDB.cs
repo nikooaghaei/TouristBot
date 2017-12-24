@@ -103,6 +103,7 @@ namespace TouristBot.Test1
                             Person p = new Person();
                             p.ChatID = chatId;
                             p.State = "Start";
+
                             //p.pic = update.Message.Photo.ToString();
                             persons.Add(p);
                             cnt++;
@@ -116,7 +117,7 @@ namespace TouristBot.Test1
                             var temp = _context.Users.FirstOrDefault(x => x.Id == chatId);
                             _context.Users.Remove(temp);
                         }
-                            // _context.Users.SqlQuery("DELETE FROM[Tourist_Bot].[dbo].[User] WHERE[Tourist_Bot].[dbo].[User].Id = " + chatId);
+                        // _context.Users.SqlQuery("DELETE FROM[Tourist_Bot].[dbo].[User] WHERE[Tourist_Bot].[dbo].[User].Id = " + chatId);
 
                         User u = new User();
 
@@ -130,48 +131,54 @@ namespace TouristBot.Test1
                         u.Firstname = update.Message.Chat.FirstName;
                         u.Lastname = update.Message.Chat.LastName;
                         _context.Users.Add(u);
- 
+
 
 
                         //    Console.WriteLine("avali");
-                              
-                            
+
+
                         //else
-                        
-                          //  Console.Write("DELETE FROM[Tourist_Bot].[dbo].[User] WHERE[Tourist_Bot].[dbo].[User].Id = " + chatId);
-                          //  _context.Users.SqlQuery("DELETE FROM[Tourist_Bot].[dbo].[User] WHERE[Tourist_Bot].[dbo].[User].Id = 60163330");
+
+                        //  Console.Write("DELETE FROM[Tourist_Bot].[dbo].[User] WHERE[Tourist_Bot].[dbo].[User].Id = " + chatId);
+                        //  _context.Users.SqlQuery("DELETE FROM[Tourist_Bot].[dbo].[User] WHERE[Tourist_Bot].[dbo].[User].Id = 60163330");
                         //_context.Users.S
 
                         //_context.Users.
-                             
-                            try { _context.SaveChanges(); }
+
+                        try { _context.SaveChanges(); }
                         catch (Exception e) { Console.WriteLine(e.Message + "DB in ConnectToDB"); }
 
 
-
-
+                        persons[userId[chatId]].Text = update.Message.Text;
+                        //persons[userId[chatId]].Text = "Null";
                         //MemoryStream ms = new MemoryStream();
-                        if (!persons[userId[chatId]].np_IsP)
+                        if (!persons[userId[chatId]].np_IsP || persons[userId[chatId]].Text == "انصراف")
+                        {
+                            //   Console.WriteLine("omad");
                             persons[userId[chatId]].Text = update.Message.Text;
+
+                        }
                         else
                         {
                             persons[userId[chatId]].Pic = update.Message.Photo;
+                            //persons[userId[chatId]].Pic = update.Message.GetType;
+                            // Console.WriteLine(update.Message.GetType());
 
                             //persons[userId[chatId]].Pic.FileId = "fuck";
-                              Console.Write("ax" + persons[userId[chatId]].Pic[0].FileId);
+                            //   Console.Write("ax" + persons[userId[chatId]].Pic[0].FileId);
                             // string FUCKU = persons[userId[chatId]].Pic.FileId;
 
                         }
-                            // Console.WriteLine(persons[userId[chatId]].State);
+                        // Console.WriteLine(persons[userId[chatId]].State);
                         StateDesignPattern userState = new StateDesignPattern();
-                     //   Console.WriteLine("mire");
-                        userState.CheckState(persons[userId[chatId]], bot,  _context );
+                        //   Console.WriteLine("mire");
+                        userState.CheckState(persons[userId[chatId]], bot, _context);
                         offset = update.UpdateId + 1;
-                      //  Console.WriteLine("mire2");
+                        //  Console.WriteLine("mire2");
                         iid++;
                     }
                 }
-                catch (Exception e) { Console.WriteLine(e.Message+ e.Source + e.GetType() + e.Data +"Base error"); }
+                catch (Exception e) { Console.WriteLine(e.Message + e.Source + e.GetType() + e.Data + "Base error"); }
             }
         }
     }
